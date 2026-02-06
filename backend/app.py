@@ -30,7 +30,7 @@ analyzer = ComplexityAnalyzer()
 def index():
     return send_from_directory('../frontend', 'index.html')
 
-@app.route('/execute', methods=['POST'])
+@app.route('/api/execute', methods=['POST'])
 @limiter.limit("10 per minute") # Specific limit for execution API
 def execute_code():
     data = request.json
