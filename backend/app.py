@@ -4,6 +4,7 @@ import os
 from dotenv import load_dotenv
 from backend.executor.runner import CodeRunner
 from backend.complexity.analyzer import ComplexityAnalyzer
+from flask import send_from_directory
 
 load_dotenv()
 
@@ -12,6 +13,12 @@ CORS(app)
 
 runner = CodeRunner()
 analyzer = ComplexityAnalyzer()
+@app.route("/")
+def home():
+    return send_from_directory(
+        os.path.join(os.path.dirname(__file__), "../frontend"),
+        "index.html"
+    )
 
 
 @app.route('/api/execute', methods=['POST'])
