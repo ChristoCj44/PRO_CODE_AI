@@ -1,5 +1,7 @@
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 import os
 from dotenv import load_dotenv
 from executor.runner import CodeRunner
@@ -11,6 +13,15 @@ load_dotenv()
 app = Flask(__name__, static_folder='../frontend', static_url_path='')
 CORS(app)
 
+# Initialize Rate Limiter
+# Uses in-memory storage by default (fine for single instance/simple production)
+limiter = Limiter(
+    get_remote_address,
+    app=app,
+    default_limits=["200 per day", "50 per hour"],
+    storage_uri="memory://"
+)
+
 # Initialize modules
 runner = CodeRunner()
 analyzer = ComplexityAnalyzer()
@@ -20,6 +31,7 @@ def index():
     return send_from_directory('../frontend', 'index.html')
 
 @app.route('/execute', methods=['POST'])
+@limiter.limit("10 per minute") # Specific limit for execution API
 def execute_code():
     data = request.json
     language = data.get('language', 'python') # Default to python

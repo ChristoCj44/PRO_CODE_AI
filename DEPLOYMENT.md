@@ -10,23 +10,41 @@ For full features (including C++ support), use **Render, Railway, or a VPS**.
 
 ---
 
-## Option 1: Vercel (Recommended for simple Python/JS testing)
+## Option 1: Vercel (Free & Easy)
 
-Vercel is great for the frontend and simple Python execution, but C++ will fail.
+**Best for:** Free hosting, simple deployment, separate frontend/backend.
+**Limitations:** No C++ support (Python automation only).
 
-1.  **Install Vercel CLI** (or use the Dashboard):
+### Steps
+1.  **Push to GitHub**:
+    Ensure your code is committed and pushed to your GitHub repository.
     ```bash
-    npm i -g vercel
+    git add .
+    git commit -m "Ready for deployment"
+    git push origin main
     ```
-2.  **Deploy**:
-    ```bash
-    vercel
-    ```
-3.  **Environment Variables**:
-    - Go to Vercel Dashboard -> Settings -> Environment Variables.
-    - Add `GROQ_API_KEY`.
 
-**Note**: The included `vercel.json` is configured to route API requests to `backend/app.py` and serve the `frontend/` folder.
+2.  **Create Vercel Project**:
+    - Go to [vercel.com/new](https://vercel.com/new).
+    - Import your GitHub repository (`sim800l-firebase`).
+
+3.  **Configure Project**:
+    - **Framework Preset**: Select "Other" (or leave as Default).
+    - **Root Directory**: Leave as `./`.
+    - **Build & Output Settings**: Leave default.
+    - **Environment Variables**:
+        - Key: `GROQ_API_KEY`
+        - Value: `your_api_key_here`
+
+4.  **Deploy**:
+    - Click **Deploy**.
+    - Vercel will detect `vercel.json` and set up the routing:
+        - `https://your-app.vercel.app/` -> Serves `frontend/index.html`
+        - `https://your-app.vercel.app/execute` -> Hits Flask Backend
+
+### Troubleshooting Vercel
+- If you see `404` on the backend, check the "Functions" tab in Vercel to see if the Python build failed.
+- Ensure `requirements.txt` is in the root directory.
 
 ---
 
@@ -37,7 +55,7 @@ Render can run a full Docker container or Python service, allowing C++ execution
 1.  Create a `render.yaml` or "Web Service" in Render Dashboard.
 2.  **Runtime**: Python 3.
 3.  **Build Command**: `pip install -r requirements.txt`.
-4.  **Start Command**: `gunicorn backend.app:app`.
+4.  **Start Command**: `gunicorn -c gunicorn.conf.py backend.app:app`.
 5.  **Environment Variables**: Add `GROQ_API_KEY`.
 
 *(Note: To get `g++` on Render's Python runtime, you may need to use a Dockerfile instead of the native Python runtime).*
@@ -58,5 +76,5 @@ WORKDIR /app
 COPY . .
 RUN pip install -r requirements.txt
 
-CMD ["gunicorn", "backend.app:app", "--bind", "0.0.0.0:5000"]
+CMD ["gunicorn", "-c", "gunicorn.conf.py", "backend.app:app"]
 ```
