@@ -2,8 +2,8 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import os
 from dotenv import load_dotenv
-from executor.runner import CodeRunner
-from complexity.analyzer import ComplexityAnalyzer
+from backend.executor.runner import CodeRunner
+from backend.complexity.analyzer import ComplexityAnalyzer
 
 load_dotenv()
 
