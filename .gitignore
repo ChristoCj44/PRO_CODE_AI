@@ -1,0 +1,43 @@
+# ===== Environment & Secrets =====
+.env
+.env.*
+*.key
+credentials.json
+service_account.json
+google-services.json
+firebase-adminsdk.json
+
+# ===== Python =====
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+venv/
+.envvenv/
+.venv/
+
+# ===== Logs =====
+*.log
+
+# ===== Node / Frontend =====
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ===== OS files =====
+.DS_Store
+Thumbs.db
+
+# ===== Vercel =====
+.vercel/
+
+# ===== Test cache =====
+.pytest_cache/
+.coverage
+htmlcov/
+
+# ===== IDE files =====
+.vscode/
+.idea/
