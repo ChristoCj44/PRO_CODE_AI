@@ -1,13 +1,14 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-import os
 from dotenv import load_dotenv
+import os
+
 from backend.executor.runner import CodeRunner
 from backend.complexity.analyzer import ComplexityAnalyzer
-from flask import send_from_directory
 
 load_dotenv()
 
+# Serve frontend directly from /frontend folder
 app = Flask(
     __name__,
     static_folder="../frontend",
@@ -18,12 +19,11 @@ CORS(app)
 
 runner = CodeRunner()
 analyzer = ComplexityAnalyzer()
-#@app.route("/")
-#def home():
- #   return send_from_directory(
-  #      os.path.join(os.path.dirname(__file__), "../frontend"),
-   #     "index.html"
-    #)
+
+# Flask will automatically serve:
+# /  -> index.html
+# /styles.css
+# /script.js
 
 
 @app.route('/api/execute', methods=['POST'])
@@ -50,6 +50,5 @@ def execute_code():
         return jsonify({'error': str(e)}), 500
 
 
-# IMPORTANT: do NOT run app.run() on Vercel
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
