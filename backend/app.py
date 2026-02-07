@@ -8,17 +8,22 @@ from flask import send_from_directory
 
 load_dotenv()
 
-app = Flask(__name__)
+app = Flask(
+    __name__,
+    static_folder="../frontend",
+    static_url_path=""
+)
+
 CORS(app)
 
 runner = CodeRunner()
 analyzer = ComplexityAnalyzer()
-@app.route("/")
-def home():
-    return send_from_directory(
-        os.path.join(os.path.dirname(__file__), "../frontend"),
-        "index.html"
-    )
+#@app.route("/")
+#def home():
+ #   return send_from_directory(
+  #      os.path.join(os.path.dirname(__file__), "../frontend"),
+   #     "index.html"
+    #)
 
 
 @app.route('/api/execute', methods=['POST'])
