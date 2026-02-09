@@ -4,6 +4,9 @@ from dotenv import load_dotenv
 import os
 
 from backend.executor.runner import CodeRunner
+#from executor.runner import CodeRunner
+#from complexity.analyzer import ComplexityAnalyzer
+
 from backend.complexity.analyzer import ComplexityAnalyzer
 
 load_dotenv()
@@ -41,12 +44,30 @@ def execute_code():
             return jsonify({"error": "Missing code"}), 400
 
         exec_result = runner.run(language, code)
-        complexity_result = analyzer.analyze(language, code)
 
         return jsonify({
             "output": exec_result.get("output", ""),
             "error": exec_result.get("error", ""),
-            "execution_time": exec_result.get("execution_time", 0),
+            "execution_time": exec_result.get("execution_time", 0)
+        })
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/analyze", methods=["POST"])
+def analyze_code():
+    try:
+        data = request.get_json()
+        language = data.get("language", "python")
+        code = data.get("code")
+
+        if not code:
+            return jsonify({"error": "Missing code"}), 400
+
+        complexity_result = analyzer.analyze(language, code)
+
+        return jsonify({
             "complexity": complexity_result
         })
 
