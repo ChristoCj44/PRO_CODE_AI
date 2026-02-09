@@ -50,15 +50,26 @@ For full features (including C++ support), use **Render, Railway, or a VPS**.
 
 ## Option 2: Render (Recommended for FULL features)
 
-Render can run a full Docker container or Python service, allowing C++ execution if configured.
+Render is the best place to host this app because it supports the `render.yaml` Blueprint for zero-configuration deployment.
 
-1.  Create a `render.yaml` or "Web Service" in Render Dashboard.
+### 🚀 Zero-Config Deploy (Blueprints)
+1.  **Push to GitHub**: Make sure `render.yaml` is in your repository.
+2.  **Go to Render**: [dashboard.render.com](https://dashboard.render.com) -> New -> **Blueprint**.
+3.  **Connect Repo**: Select your `sim800l-firebase` repo.
+4.  **Apply**: Render will automatically detect the configuration from `render.yaml`.
+5.  **Environment Variables**:
+    - Render might ask for `GROQ_API_KEY`. Enter it.
+6.  **Sit back**: Render handles the build and deploy.
+
+### Manual Deploy (Web Service)
+If you prefer manual setup without `render.yaml`:
+1.  Create a **Web Service**.
 2.  **Runtime**: Python 3.
 3.  **Build Command**: `pip install -r requirements.txt`.
 4.  **Start Command**: `gunicorn -c gunicorn.conf.py backend.app:app`.
 5.  **Environment Variables**: Add `GROQ_API_KEY`.
 
-*(Note: To get `g++` on Render's Python runtime, you may need to use a Dockerfile instead of the native Python runtime).*
+*(Note: To get `g++` for C++ execution, use Option 3 below).*
 
 ---
 

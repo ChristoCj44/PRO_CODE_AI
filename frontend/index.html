@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ProCode - Python AI IDE</title>
+    <title>AlgoMindML - Python AI IDE</title>
     <link rel="stylesheet" href="styles.css">
     <!-- Monaco Editor CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.36.1/min/vs/loader.min.js"></script>
@@ -14,11 +14,14 @@
     <div class="container">
         <!-- Header -->
         <header>
-            <div class="logo">ProCode <span>AI</span></div>
+            <div class="logo">AlgoMindML</div>
             <div class="controls">
                 <div class="lang-badge">Python 3.8+</div>
                 <button id="run-btn" onclick="runCode()">
                     <span class="icon">▶</span> Run Code
+                </button>
+                <button id="analyze-btn" onclick="analyzeCode()">
+                    <span class="icon"></span> AI Analysis
                 </button>
             </div>
         </header>

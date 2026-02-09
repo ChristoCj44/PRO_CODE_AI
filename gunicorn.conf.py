@@ -1,7 +1,8 @@
-# Gunicorn Configuration
+import os
 
 # The address and port to bind to
-bind = "0.0.0.0:5000"
+port = os.getenv("PORT", "5000")
+bind = f"0.0.0.0:{port}"
 
 # Number of worker processes to handle requests
 # For CPU bound tasks, usually (2 * CPUs) + 1. 

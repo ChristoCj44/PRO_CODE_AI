@@ -3,5 +3,5 @@ flask-cors
 python-dotenv
 gunicorn
 requests
-Flask-Limiter
+
 groq

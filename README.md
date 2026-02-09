@@ -1,4 +1,4 @@
-# ProCode AI - Python Edition
+# AlgoMindML - Python Edition
 
 A production-ready, locally hosted Code Editor & AI Analyzer.
 Combines a **Python/Flask/Groq** backend with a **Modern React/Vite** frontend.
